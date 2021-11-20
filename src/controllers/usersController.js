@@ -15,13 +15,19 @@ class UsersController {
         }else{
             const database = new Database('users');
             let pass = bcrypt.hashSync(password, 10)
+            userName=userName.toUpperCase();
             let user={
                 userName: userName,
                 password: pass,
                 email: email
             }
-            database.insertOne(user);
-            return res.send(201);
+            database.insertOne(user).then(response=>{
+                return res.status(201);
+            })
+            .catch(error => {
+            return res.status(400).end();
+        });
+            
         }
         
     }
@@ -31,17 +37,19 @@ class UsersController {
         if (!userName || !password) {
             return res.status(403);
         }
+        userName= userName.toUpperCase();
         const database = new Database('users');
-        database.findOne({ userName: req.body.userName })
+        database.findOne({ userName: userName })
             .then(results => {
             if (results) {
                 if (!bcrypt.compareSync(password, results.password)) {
                     res.statusMessage = "Incorect password!";
-                    return res.status(400).end();
+                    return res.status(403).end();
                 }
                 let token = jwt.sign({userName: userName},process.env.SECRET);
                 tokenController.tokenRegistration(token);
-                return res.status(200);
+                console.log("regreso");
+                return res.send(token).status(200).end();
             }
             else {
                 return res.status(403).end();
@@ -52,7 +60,7 @@ class UsersController {
 // Make the token unusable
     static userLogOut(req,res){
         tokenController.tokenInactive(req.body.token);
-        return res.status(200);
+        return res.status(200).end();
     }
 
 // the list of all users or a user by id
@@ -64,7 +72,7 @@ class UsersController {
             .then(results => {
                 if(results) {
                     console.log('Resultados: ', results);
-                    return res.send(results);
+                    return res.status(200).send(results);
                 } else {
                     return res.status(400);
                 }

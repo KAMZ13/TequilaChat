@@ -1,3 +1,4 @@
+const { response } = require('express');
 const Database = require('../models/database');
 class tokenController{
     
@@ -5,15 +6,19 @@ class tokenController{
     static tokenRegistration(token){
         const database = new Database('tokens');
         database.insertOne({token: token,
-        status: "Active"})
-        return
+        status: "Active"}).then(response=>{
+            console.log("ingreso");
+            return;
+        });
+        return;
     }
 
 // When the user logout change the status of the token if someelse want to use this token it won´t work
     static tokenInactive(token){
         const database = new Database('tokens');
-        database.findOneAndUpdate({token: token},{status: "Inactive"});
-        return
+
+        database.findOneAndUpdate({token: token},{$set:{status: "Inactive"}});
+        return;
     }
 
 }

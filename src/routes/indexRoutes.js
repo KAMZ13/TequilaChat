@@ -3,7 +3,7 @@ const apiRoutes = require('./apiRoutes');
 const authRoutes = require('./authRoutes');
 const auth= require ('../../middlewares/auth')
 
-router.use('/api',  apiRoutes);
+router.use('/api', auth.authPer,  apiRoutes);
 router.use('/auth', authRoutes);
 
 
