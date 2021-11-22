@@ -9,7 +9,7 @@ const Database = require('./src/models/database');
 const indexRoutes = require('./src/routes/indexRoutes');
 
 
-//for use req.body
+//use for req.body
 app.use(express.json()) 
 
 const MongoClient = require('mongodb').MongoClient;

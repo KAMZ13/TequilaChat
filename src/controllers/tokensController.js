@@ -2,18 +2,18 @@ const { response } = require('express');
 const Database = require('../models/database');
 class tokenController{
     
-//Register the token to know if the user is still online 
+//Register token to know if user online
     static tokenRegistration(token){
         const database = new Database('tokens');
         database.insertOne({token: token,
         status: "Active"}).then(response=>{
-            console.log("ingreso");
+            //console.log("ONLINE");
             return;
         });
         return;
     }
 
-// When the user logout change the status of the token if someelse want to use this token it won´t work
+// when user logs out, change token status so that its disabled
     static tokenInactive(token){
         const database = new Database('tokens');
 

@@ -1,7 +1,7 @@
 const Database = require('./../models/database');
 
 class chatsMembersController{
-//create a link for a chat
+//create link for a chat
 static memberlink(req,res){
     let {userName, chatName}= req.query;
     if(!userName || !chatNmae){
@@ -14,7 +14,7 @@ static memberlink(req,res){
     }
     
 }
-//Register a user in a chat with a link
+//Register user in chat with link
 static memberSingupLink(req,res){
     const database= new Database('chatMembers');
     database.insertOne({

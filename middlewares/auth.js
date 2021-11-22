@@ -9,7 +9,7 @@ function authPer(req,res,next){
     if(token){
         jwt.verify(token, secret, (err)=>{
             if(err){
-                res.status(401).send({error: "Token no válido"})   
+                res.status(401).send({error: "Invalid Token"})   
             }else{
                 const database = new Database('tokens');
                 database.findOne({token: token}).then(response=>{

@@ -1,6 +1,6 @@
 const { Console } = require('console');
 const Database = require('./../models/database');
-// new message
+// New Msj
 class MessagesController {
 
 static sendMessage(req,res){
@@ -21,7 +21,7 @@ static sendMessage(req,res){
     }
     
 }
-// find all messages for one user
+// Find all Msjs for one user
 static getallUsersmessages(req,res){
     let userName= req.query.userName;
     if(!userName){

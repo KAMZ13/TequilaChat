@@ -3,7 +3,7 @@ const { off } = require('process');
 const Database = require('./../models/database');
 
 class chatsController{
-// create a new chat
+// Create new chat
     static createChat(req,res){
         let chatName=req.body.chatName;
         let userName=req.body.userName;
@@ -32,7 +32,7 @@ class chatsController{
     }
         }
     
-//find a chat by name
+//find chat by name
 
     static getChatName(req, res){
         let chatName= req.query.chatName;

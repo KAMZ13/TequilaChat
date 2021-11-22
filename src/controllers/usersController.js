@@ -7,7 +7,7 @@ const tokenController = require('./tokensController');
 const { ObjectId } = require('bson');
 class UsersController {
 
-// create a new user
+// Create user
     static userSignIn(req,res){
         let {userName, password, email}= req.body;
         if(!userName || !password || !email){
@@ -31,7 +31,7 @@ class UsersController {
         }
         
     }
-// login with a exist user
+// Login
     static userLogin(req,res){
         let { userName, password } = req.body;
         if (!userName || !password) {
@@ -43,12 +43,12 @@ class UsersController {
             .then(results => {
             if (results) {
                 if (!bcrypt.compareSync(password, results.password)) {
-                    res.statusMessage = "Incorect password!";
+                    res.statusMessage = "Incorect Password! D'OH!";
                     return res.status(403).end();
                 }
                 let token = jwt.sign({userName: userName},process.env.SECRET);
                 tokenController.tokenRegistration(token);
-                console.log("regreso");
+                //console.log("regreso");
                 return res.send(token).status(200).end();
             }
             else {
@@ -57,13 +57,13 @@ class UsersController {
         });
     }
 
-// Make the token unusable
+// Disable token
     static userLogOut(req,res){
         tokenController.tokenInactive(req.body.token);
         return res.status(200).end();
     }
 
-// the list of all users or a user by id
+// Find all users by ID
     static getUsers(req, res) {
         const database = new Database('users');
         if(req.query.id){
@@ -71,7 +71,7 @@ class UsersController {
             database.findOne({_id: id})
             .then(results => {
                 if(results) {
-                    console.log('Resultados: ', results);
+                    //console.log('Results: ', results);
                     return res.status(200).send(results);
                 } else {
                     return res.status(400);
